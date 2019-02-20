@@ -1,5 +1,5 @@
+'use strict'
 const mainFilter = document.querySelector(`.main__filter`);
-const filterTemplate = document.querySelector(`#element-template`).content.querySelector(`.filters`);
 const filters = [
   {
     id: `filter__all`,
@@ -43,7 +43,7 @@ const filters = [
     title: `ARCHIVE`,
     count: 115
   },
-]
+];
 // mainFilter.appendChild(filterTemplate);
 const addFilter = (id, title, count, isChecked = false) => {
   const input = document.createElement(`input`);
@@ -60,7 +60,7 @@ const addFilter = (id, title, count, isChecked = false) => {
   label.className = `filter__label`;
   label.innerHTML = `${title} <span class="filter__overdue-count">${count}</span>`;
   mainFilter.appendChild(label);
-}
+};
 
 for (let i = 0; i < filters.length; i++) {
   const item = filters[i];
@@ -75,7 +75,7 @@ const addTask = (count) => {
     const taskElement = taskTemplate.cloneNode(true);
     board.appendChild(taskElement);
   }
-}
+};
 
 addTask(7);
 
@@ -83,15 +83,15 @@ const randomInteger = (min, max) => {
   let rand = min + Math.random() * (max + 1 - min);
   rand = Math.floor(rand);
   return rand;
-}
+};
 
 const addRandomTasks = (e) => {
   const target = e.target;
-  if (target.className == `filter__label`) {
+  if (target.className === `filter__label`) {
     board.innerHTML = ``;
     const countTasks = randomInteger(1, 10);
     addTask(countTasks);
   }
-}
+};
 
 mainFilter.addEventListener(`click`, addRandomTasks);
