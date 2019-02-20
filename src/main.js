@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 const mainFilter = document.querySelector(`.main__filter`);
 const filters = [
   {
