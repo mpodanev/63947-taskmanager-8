@@ -44,13 +44,12 @@ const filters = [
     count: 115
   },
 ];
-// mainFilter.appendChild(filterTemplate);
+
 const addFilter = (id, title, count, isChecked = false) => {
   const input = document.createElement(`input`);
   input.type = `radio`;
   input.id = id;
-  input.classList.add(`filter__input`);
-  input.classList.add(`visually-hidden`);
+  input.classList.add(`filter__input`, `visually-hidden`);
   input.checked = isChecked;
   input.disabled = count ? false : true;
   mainFilter.appendChild(input);
@@ -58,7 +57,7 @@ const addFilter = (id, title, count, isChecked = false) => {
   const label = document.createElement(`label`);
   label.for = id;
   label.className = `filter__label`;
-  label.innerHTML = `${title} <span class="filter__overdue-count">${count}</span>`;
+  label.insertAdjacentHTML(`afterBegin`, `${title} <span class="filter__overdue-count">${count}</span>`);
   mainFilter.appendChild(label);
 };
 
@@ -69,6 +68,7 @@ for (let i = 0; i < filters.length; i++) {
 
 const board = document.querySelector(`.board__tasks`);
 const taskTemplate = document.querySelector(`#element-template`).content.querySelector(`.card`);
+const initialNumberOfTasks = 7;
 
 const addTask = (count) => {
   for (let i = 0; i < count; i++) {
@@ -77,7 +77,7 @@ const addTask = (count) => {
   }
 };
 
-addTask(7);
+addTask(initialNumberOfTasks);
 
 const randomInteger = (min, max) => {
   let rand = min + Math.random() * (max + 1 - min);
