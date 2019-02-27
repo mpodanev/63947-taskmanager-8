@@ -1,5 +1,10 @@
-'use strict';
+import makeFilter from './make-filter';
+import makeTask from './make-task';
+
+
 const mainFilter = document.querySelector(`.main__filter`);
+const board = document.querySelector(`.board__tasks`);
+const initialNumberOfTasks = 7;
 const filters = [
   {
     id: `filter__all`,
@@ -45,35 +50,16 @@ const filters = [
   },
 ];
 
-const addFilter = (id, title, count, isChecked = false) => {
-  const input = document.createElement(`input`);
-  input.type = `radio`;
-  input.id = id;
-  input.classList.add(`filter__input`, `visually-hidden`);
-  input.checked = isChecked;
-  input.disabled = count ? false : true;
-  mainFilter.appendChild(input);
-
-  const label = document.createElement(`label`);
-  label.for = id;
-  label.className = `filter__label`;
-  label.insertAdjacentHTML(`afterBegin`, `${title} <span class="filter__overdue-count">${count}</span>`);
-  mainFilter.appendChild(label);
-};
-
 for (let i = 0; i < filters.length; i++) {
   const item = filters[i];
-  addFilter(item.id, item.title, item.count, item.checked);
+  const filter = makeFilter(item.id, item.title, item.count, item.checked);
+  mainFilter.insertAdjacentHTML(`beforeend`, filter);
 }
-
-const board = document.querySelector(`.board__tasks`);
-const taskTemplate = document.querySelector(`#element-template`).content.querySelector(`.card`);
-const initialNumberOfTasks = 7;
 
 const addTask = (count) => {
   for (let i = 0; i < count; i++) {
-    const taskElement = taskTemplate.cloneNode(true);
-    board.appendChild(taskElement);
+    const task = makeTask();
+    board.insertAdjacentHTML(`beforeend`, task);
   }
 };
 
