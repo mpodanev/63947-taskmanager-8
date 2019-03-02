@@ -5,6 +5,11 @@ import makeTask from './make-task';
 const mainFilter = document.querySelector(`.main__filter`);
 const board = document.querySelector(`.board__tasks`);
 const initialNumberOfTasks = 7;
+const randomInteger = (min, max) => {
+  let rand = min + Math.random() * (max + 1 - min);
+  rand = Math.floor(rand);
+  return rand;
+};
 const filters = [
   {
     id: `filter__all`,
@@ -49,6 +54,28 @@ const filters = [
     count: 115
   },
 ];
+const task = {
+  title: [
+    `Изучить теорию`,
+    `Сделать домашку`,
+    `Пройти интенсив на соточку`,
+  ][Math.floor(Math.random() * 3)],
+  dueDate: Date.now() + 1 + randomInteger(-7, 7) * 24 * 60 * 60 * 1000,
+  tags: new Set([
+    `homework`,
+    `theory`,
+    `practice`,
+    `intensive`,
+    `keks`
+  ]),
+  picture: `http://picsum.photos/100/100?r=${Math.random()}`,
+  color: [`black`, `yellow`, `blue`, `green`, `pink`][[Math.floor(Math.random() * 5)]],
+  repeatingDays: {
+    Mo: false, Tu: false, We: false, Th: false, Fr: false, Sa: false, Su: false
+  },
+  isFavorite: false,
+  isDone: false,
+};
 
 for (let i = 0; i < filters.length; i++) {
   const item = filters[i];
@@ -58,18 +85,12 @@ for (let i = 0; i < filters.length; i++) {
 
 const addTask = (count) => {
   for (let i = 0; i < count; i++) {
-    const task = makeTask();
-    board.insertAdjacentHTML(`beforeend`, task);
+    const renderTask = makeTask(task);
+    board.insertAdjacentHTML(`beforeend`, renderTask);
   }
 };
 
 addTask(initialNumberOfTasks);
-
-const randomInteger = (min, max) => {
-  let rand = min + Math.random() * (max + 1 - min);
-  rand = Math.floor(rand);
-  return rand;
-};
 
 const addRandomTasks = (e) => {
   const target = e.target;
